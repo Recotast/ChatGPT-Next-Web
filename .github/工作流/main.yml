@@ -1,0 +1,18 @@
+  ---
+  name: Sync with upstream
+  on:
+    schedule:
+      - cron: '0 0 * * *' # 每天UTC 0点同步一次
+  jobs:
+    sync:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout the repository
+          uses: actions/checkout@v2
+        - name: Fetch the upstream repository
+          run: git remote add upstream ${{ secrets.https://github.com/Yidadaa/ChatGPT-Next-Web/ }}
+        - name: Merge upstream into fork
+          run: |
+            git fetch upstream
+            git merge upstream/main
+            git push
